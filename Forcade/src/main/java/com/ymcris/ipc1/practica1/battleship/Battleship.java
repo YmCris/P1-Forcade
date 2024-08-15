@@ -1,9 +1,9 @@
-package com.ymcris.ipc1.practica1.juegos;
+package com.ymcris.ipc1.practica1.battleship;
 
 /**
  * Clase encargada de realizar el juego de "Battleship en consola".
  *
- * @author crist
+ * @author YmCris
  */
 public class Battleship {
 

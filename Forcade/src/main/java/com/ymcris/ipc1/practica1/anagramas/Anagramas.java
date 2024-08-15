@@ -1,9 +1,9 @@
-package com.ymcris.ipc1.practica1.juegos;
+package com.ymcris.ipc1.practica1.anagramas;
 
 /**
  * Clase encargada de realizar el juego de "Anagramas en consola".
  *
- * @author crist
+ * @author YmCris
  */
 public class Anagramas {
 
