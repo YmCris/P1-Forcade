@@ -7,4 +7,7 @@ package com.ymcris.ipc1.practica1.anagramas;
  */
 public class Anagramas {
 
+    public void holaAnagramas(){
+        System.out.println("Hola anagrama");
+    }
 }

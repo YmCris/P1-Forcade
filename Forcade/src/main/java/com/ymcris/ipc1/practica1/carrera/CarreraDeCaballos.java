@@ -8,4 +8,7 @@ package com.ymcris.ipc1.practica1.carrera;
  */
 public class CarreraDeCaballos {
 
+    public void holaHipodromo(){
+        System.out.println("Hola Hipodromo");
+    }
 }

@@ -7,4 +7,7 @@ package com.ymcris.ipc1.practica1.battleship;
  */
 public class Battleship {
 
+    public void holaBattleship(){
+        System.out.println("Hola Battleship");
+    }
 }
