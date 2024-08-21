@@ -2,7 +2,7 @@ package com.ymcris.ipc1.practica1.battleship;
 
 /**
  *
- * @author crist
+ * @author YmCris
  */
 public class MotorDelJuego {
     
