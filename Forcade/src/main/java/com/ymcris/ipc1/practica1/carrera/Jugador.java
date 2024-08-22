@@ -12,6 +12,7 @@ public class Jugador {
     Caballos caballoSeleccionado= new Caballos();
     String nombre;
     int númeroDeCaballos;
+    int númeroDeDados;
 
     /**
      *
@@ -28,7 +29,9 @@ public class Jugador {
      * @return
      */
     protected int decidirEstrategia() {
-
+        System.out.println("Estrategia:"+"\n");
+        System.out.println("1. Avanzar con precaución.");
+        System.out.println("2. Avanzar normal.");
         return caballoSeleccionado.getEstrategia();
     }
     
@@ -41,20 +44,26 @@ public class Jugador {
         System.out.println("Ingrese el número de caballos con los que desea competir:");
         númeroDeCaballos = scanner.nextInt();
     }
+    
+    protected void definirDados(){
+        System.out.println("Ingrese el número de dados con los que desea jugar:");
+        númeroDeDados = scanner.nextInt();
+    }
+
+    public Caballos getCaballoSeleccionado() {
+        return caballoSeleccionado;
+    }
 
     public String getNombre() {
         return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
 
     public int getNúmeroDeCaballos() {
         return númeroDeCaballos;
     }
 
-    public void setNúmeroDeCaballos(int númeroDeCaballos) {
-        this.númeroDeCaballos = númeroDeCaballos;
-    }    
+    public int getNúmeroDeDados() {
+        return númeroDeDados;
+    }
+
 }

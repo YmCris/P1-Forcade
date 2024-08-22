@@ -6,17 +6,21 @@ package com.ymcris.ipc1.practica1.carrera;
  *
  * @author YmCris
  */
-public class MotorDelJuegoHipodromo {
+public class Hipodromo {
 
-    Pista pista;
-    public void holaHipodromo(){
-        System.out.println("Hola Hipodromo");
+    Jugador jugador = new Jugador();
+    int númeroDeCaballos = jugador.getNúmeroDeCaballos();
+    int númeroDeDados = jugador.getNúmeroDeDados();
+
+    public void holaHipodromo() {
         Jugador jugador = new Jugador();
         jugador.definirNombreyCaballos();
+        Dados dado = new Dados();
+        dado.lanzarDados();
+        dado.verificarPrimo(númeroDeDados);
         Pista pista = new Pista(jugador.getNúmeroDeCaballos());
         pista.crearPista();
         pista.mostrarPista();
     }
-    
-    
+
 }

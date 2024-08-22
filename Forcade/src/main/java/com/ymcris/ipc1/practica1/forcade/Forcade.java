@@ -2,7 +2,7 @@ package com.ymcris.ipc1.practica1.forcade;
 
 import com.ymcris.ipc1.practica1.anagramas.Anagramas;
 import com.ymcris.ipc1.practica1.battleship.Battleship;
-import com.ymcris.ipc1.practica1.carrera.MotorDelJuegoHipodromo;
+import com.ymcris.ipc1.practica1.carrera.Hipodromo;
 import java.util.Scanner;
 
 /**
@@ -15,9 +15,9 @@ import java.util.Scanner;
  */
 public class Forcade {
 
-    MotorDelJuegoHipodromo motorH;
     Scanner scanner = new Scanner(System.in);
     int opciónJuego;
+    boolean parametroIntroducido= false;
     
     /**
      * Método principal encargado de iniciar el programa.
@@ -41,20 +41,47 @@ public class Forcade {
     private void parámetroInicial(String[] args) {
         if (args.length > 0) {
             String comando = args[0].trim().toLowerCase();
-            if (comando.equals("hipodromo")) {
-                MotorDelJuegoHipodromo carrera = new MotorDelJuegoHipodromo();
-                carrera.holaHipodromo();
+            if(comando.equals("hola")){
+                System.out.println("HOlA MUNDO");
+            } else if (comando.equals("hipodromo")) {
+                Hipodromo hipodromo = new Hipodromo();
+                hipodromo.holaHipodromo();
+                parametroIntroducido = true;
             } else if (comando.equals("anagramas")) {
                 Anagramas anagrama = new Anagramas();
                 anagrama.holaAnagramas();
+                parametroIntroducido = true;
             } else if (comando.equals("battleship")) {
                 Battleship battle = new Battleship();
                 battle.holaBattleship();
+                parametroIntroducido = true;
             } else {
                 System.out.println("Error: Comando no reconocido.");
+                parametroIntroducido = false;
             }
         } else {
-            return;
+            System.out.println("Ingrese el juego que desea jugar:");
+            System.out.println("1. Carrera de caballos en el hipódromo.");
+            System.out.println("2. Anagramas.");
+            System.out.println("3. Battleship.");
+            opciónJuego = scanner.nextInt();
+            switch(opciónJuego){
+                case 1: 
+                    Hipodromo hipodromo = new Hipodromo();
+                    hipodromo.holaHipodromo();
+                    break;
+                case 2: 
+                    Anagramas anagrama = new Anagramas();
+                    anagrama.holaAnagramas();
+                    break;
+                case 3: 
+                    Battleship battle = new Battleship();
+                    battle.holaBattleship();
+                    break;
+                default: 
+                    System.out.println("Opción no válida");
+                    return;
+            }return;
         }
     }
     
@@ -62,27 +89,29 @@ public class Forcade {
      * 
      */
     private void selecciónDeJuegos(){
-        System.out.println("Ingrese el juego que desea jugar:");
-        System.out.println("1. Carrera de caballos en el hipódromo.");
-        System.out.println("2. Anagramas.");
-        System.out.println("3. Battleship.");
-        opciónJuego = scanner.nextInt();
-        switch(opciónJuego){
-            case 1: 
-                MotorDelJuegoHipodromo motorh = new MotorDelJuegoHipodromo();
-                motorh.holaHipodromo();
-                break;
-            case 2: 
-                
-                break;
-            case 3: 
-                
-                break;
-            default: 
-                System.out.println("Opción no válida");
-                selecciónDeJuegos();
-                break;
+        if (parametroIntroducido=false) {
+            System.out.println("Ingrese el juego que desea jugar:");
+            System.out.println("1. Carrera de caballos en el hipódromo.");
+            System.out.println("2. Anagramas.");
+            System.out.println("3. Battleship.");
+            opciónJuego = scanner.nextInt();
+            switch(opciónJuego){
+                case 1: 
+                    Hipodromo hipodromo = new Hipodromo();
+                    hipodromo.holaHipodromo();
+                    break;
+                case 2: 
+                    Anagramas anagrama = new Anagramas();
+                    anagrama.holaAnagramas();
+                    break;
+                case 3: 
+                    Battleship battle = new Battleship();
+                    battle.holaBattleship();
+                    break;
+                default: 
+                    System.out.println("Opción no válida");
+                    return;
+            }return;
         }
-    
     }
 }
