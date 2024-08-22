@@ -15,9 +15,7 @@ public class Hipodromo {
     public void holaHipodromo() {
         Jugador jugador = new Jugador();
         jugador.definirNombreyCaballos();
-        Dados dado = new Dados();
-        dado.lanzarDados();
-        dado.verificarPrimo(númeroDeDados);
+        jugador.decidirEstrategia();
         Pista pista = new Pista(jugador.getNúmeroDeCaballos());
         pista.crearPista();
         pista.mostrarPista();

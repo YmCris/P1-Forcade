@@ -7,12 +7,14 @@ import java.util.Scanner;
  * @author crist
  */
 public class Jugador {
-    
+
     Scanner scanner = new Scanner(System.in);
     Caballos caballoSeleccionado= new Caballos();
     String nombre;
     int númeroDeCaballos;
     int númeroDeDados;
+    int estrategia;
+    boolean avanceNormal = true;
 
     /**
      *
@@ -28,12 +30,36 @@ public class Jugador {
      *
      * @return
      */
-    protected int decidirEstrategia() {
-        System.out.println("Estrategia:"+"\n");
-        System.out.println("1. Avanzar con precaución.");
-        System.out.println("2. Avanzar normal.");
-        return caballoSeleccionado.getEstrategia();
+    protected void decidirEstrategia() {
+        Dados dado = new Dados();
+        dado.definirDado();
+        System.out.println("\n".repeat(100));
+        System.out.println("Seleccione su estrategia:");
+        System.out.println("1. Avanzar normal.");
+        System.out.println("2. Avanzar con riesgo.");
+        estrategia = scanner.nextInt();
+        switch(estrategia){
+            case 1:
+                System.out.println("\n".repeat(100));
+                dado.lanzarDados();
+                dado.verificarPrimo(númeroDeDados);
+                avanceNormal = true;
+                System.out.println("El jugador avanza normal "+dado.getResultado()+" casillas");
+                break;
+            case 2:
+                dado.lanzarDados();
+                dado.verificarPrimo(númeroDeDados);
+                avanceNormal = true;
+                System.out.println("El jugador avanza con riesgo "+dado.getResultado()+" casillas");
+                avanceNormal = false;
+                break;
+            default:
+                System.out.println("Entrada no válida >:(");
+                break;
+        }
     }
+    
+    
     
     /**
      * 
@@ -65,5 +91,11 @@ public class Jugador {
     public int getNúmeroDeDados() {
         return númeroDeDados;
     }
+
+    public boolean isAvanceNormal() {
+        return avanceNormal;
+    }
+    
+    
 
 }
