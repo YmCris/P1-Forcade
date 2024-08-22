@@ -1,5 +1,7 @@
 package com.ymcris.ipc1.practica1.carrera;
 
+import java.util.Scanner;
+
 /**
  * Clase encargada de realizar el juego de "Carrera de Caballos en el
  * Hipódromo."
@@ -8,17 +10,18 @@ package com.ymcris.ipc1.practica1.carrera;
  */
 public class Hipodromo {
 
-    Jugador jugador = new Jugador();
-    int númeroDeCaballos = jugador.getNúmeroDeCaballos();
-    int númeroDeDados = jugador.getNúmeroDeDados();
 
     public void holaHipodromo() {
         Jugador jugador = new Jugador();
         jugador.definirNombreyCaballos();
         jugador.decidirEstrategia();
-        Pista pista = new Pista(jugador.getNúmeroDeCaballos());
+        Jugador pista = new Jugador(jugador.getNúmeroDeCaballos());
         pista.crearPista();
+        pista.colocarCaballos();
         pista.mostrarPista();
     }
+
+    //-----------------------------------------------------
+
 
 }

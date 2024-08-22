@@ -33,20 +33,23 @@ public class Dados {
     /**
      *
      * @param resultado
-     * @return
+     * @return verdadero = es primo, falso = no es primo
      */
     protected boolean verificarPrimo(int resultado) {
         if (resultado <= 1) {
+            esPrimo = false;
+            return false;
+        } else if (true) {
             for (int i = 2; i < Math.sqrt(resultado); i++) {
                 if (resultado % i == 0) {
                     System.out.println("El número no es primo");
+                    esPrimo = false;
                     return false;
                 }
             }
-            return false;
         }
-
         System.out.println("El número es primo");
+        esPrimo = true;
         return true;
     }
 
