@@ -1,5 +1,6 @@
 package com.ymcris.ipc1.practica1.carrera;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -10,6 +11,7 @@ public class Jugador {
 
     Scanner scanner = new Scanner(System.in);
     Caballos caballo = new Caballos();
+    Dados dado = new Dados();
     String nombre;
     int númeroDeCaballos;
     int númeroDeDados;
@@ -31,8 +33,6 @@ public class Jugador {
      * @return
      */
     protected void decidirEstrategia() {
-        Dados dado = new Dados();
-        dado.definirDado();
         System.out.println("\n".repeat(100));
         System.out.println("Seleccione su estrategia:");
         System.out.println("1. Avanzar normal.");
@@ -40,23 +40,31 @@ public class Jugador {
         estrategia = scanner.nextInt();
         switch (estrategia) {
             case 1:
-                System.out.println("\n".repeat(100));
-                dado.lanzarDados();
-                dado.verificarPrimo(númeroDeDados);
                 avanceNormal = true;
-                System.out.println("El jugador avanza normal " + dado.getResultado() + " casillas");
                 break;
             case 2:
-                dado.lanzarDados();
-                dado.verificarPrimo(númeroDeDados);
-                avanceNormal = true;
-                System.out.println("El jugador avanza con riesgo " + dado.getResultado() + " casillas");
                 avanceNormal = false;
                 break;
             default:
                 System.out.println("Entrada no válida >:(");
                 break;
         }
+    }
+    
+    protected void avanceNormal(){
+        dado.lanzarDados(númeroDeDados);
+        dado.verificarPrimo();
+        System.out.println("\n".repeat(100));
+        System.out.println("El jugador avanza normal " + dado.getResultado() + " casillas");
+        avanceNormal = true;
+    }
+    
+    protected void avenceConRiesgo(){
+        dado.lanzarDados(númeroDeDados);
+        dado.verificarPrimo();
+        System.out.println("\n".repeat(100));
+        System.out.println("El jugador avanza con riesgo " + dado.getResultado() + " casillas");
+        avanceNormal = false;    
     }
 
     /**
@@ -89,6 +97,8 @@ public class Jugador {
     public boolean isAvanceNormal() {
         return avanceNormal;
     }
+    
+    
 
     //--------------------------------------------------------------------------   
     protected int filas;
@@ -141,9 +151,32 @@ public class Jugador {
      */
     public void colocarCaballos() {
         for (int i = 0; i < númeroDeCaballos; i++) {
-            pista[0][0]=1;
-            pista[i+1][0]=1;
+            pista[0][0] = 1;
+            posicionJugador= 0;
+            pista[i + 1][0] = i + 2;
         }
     }
+    
+    public void moverCaballoJugador(int resultadoDados){
+        pista[0][posicionJugador]=0;
+        posicionJugador += resultadoDados;
+        if (posicionJugador >= COLUMNAS) {
+            posicionJugador = COLUMNAS -1;
+        }
+        
+        pista[0][posicionJugador]=1;
+        moverCaballosAleatorios();
+    }
+    
+    private void moverCaballosAleatorios(){
+        for (int i = 1; i < númeroDeCaballos; i++) {
+            int movimientoAleatorio = (int) (Math.random() * 3); // Movimiento entre 0 y 2 casillas
+            int nuevaPosicion = posicionJugador + movimientoAleatorio;
 
+            if (nuevaPosicion < COLUMNAS) {
+                pista[i][posicionJugador] = 0; // Limpiar posición actual
+                pista[i][nuevaPosicion] = i + 2; // Mover a la nueva posición
+            }
+        }
+    }
 }
