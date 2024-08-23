@@ -1,5 +1,6 @@
 package com.ymcris.ipc1.practica1.carrera;
 
+import com.ymcris.ipc1.practica1.forcade.Forcade;
 import java.util.Scanner;
 
 /**
@@ -12,10 +13,20 @@ public class Hipodromo {
 
     private Scanner scanner = new Scanner(System.in);
 
+    private String MAGENTA = "\033[35m";
+    private String RESET = "\033[0m";
+    private String AZUL = "\033[34m";
+
+    /**
+     * Método encargado de juntar todo las instancias y métodos requeridos para
+     * el funcionamiento de la carrera de caballos. También en que el juego siga
+     * en curso (No debería, pero ya me tardé mucho con el juego).
+     */
     public void holaHipodromo() {
         Jugador jugador = new Jugador();
 
-        jugador.definirNombreyCaballos();
+        jugador.definirNombre();
+        jugador.definirCaballos();
         jugador.definirDados();
         jugador.decidirEstrategia();
 
@@ -30,20 +41,19 @@ public class Hipodromo {
             dado.lanzarDados(jugador.getNúmeroDeDados());
             pista.moverCaballoJugador(dado.getResultado());
             pista.mostrarPista();
-
-            // Verifica si el juego ha terminado
             if (verificarGanador(pista)) {
                 System.out.println("¡El juego ha terminado!");
                 juegoEnCurso = false;
             } else {
-                System.out.println("Seleccione su estrategia:");
+                System.out.println("");
+                System.out.println(AZUL+"Seleccione su estrategia:"+RESET);
                 System.out.println("1. Avanzar normal.");
                 System.out.println("2. Avanzar con riesgo.");
-                System.out.println("3. Terminar el juego.");
+                System.out.println("3. Regresar al menú principal.");
                 int respuesta = scanner.nextInt();
                 switch (respuesta) {
                     case 1:
-                        juegoEnCurso=true;
+                        juegoEnCurso = true;
                         System.out.println("Caballo avanza normal.");
                         break;
                     case 2:
@@ -51,8 +61,9 @@ public class Hipodromo {
                         juegoEnCurso = true;
                         break;
                     case 3:
-                        System.out.println("Juego terminado por el usuario.");
                         juegoEnCurso = false;
+                        Forcade forcade = new Forcade();
+                        forcade.menuPrincipal();
                         break;
                     default:
                         System.out.println("Entrada no válida >:(");
@@ -61,6 +72,7 @@ public class Hipodromo {
             }
         }
     }
+    
 
     /**
      * Verifica si algún caballo ha ganado.
@@ -69,13 +81,56 @@ public class Hipodromo {
      * @return true si algún caballo ha ganado, false en caso contrario.
      */
     private boolean verificarGanador(Jugador pista) {
+        Jugador jugador = new Jugador();
+        int posicionJugador = pista.getPosicionCaballo(0);
+        if (pista.getPosicionCaballo(0) >= pista.COLUMNAS - 1) {
+            System.out.println(MAGENTA + "El caballo de " + jugador.getNombre() + jugador.nombre + " es el ganador."+RESET);
+            jugador.setPartidasGanadas(+1);
+            System.out.println(MAGENTA + "EL jugador ha ganado: " + jugador.getPartidasGanadas()+" veces."+ RESET);
+            partidaFinalizada();
+            return true;
+        }
         for (int i = 0; i < pista.getNúmeroDeCaballos(); i++) {
-            // Verifica si el caballo ha llegado al final de la pista
-            if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 2) {
-                System.out.println("¡Caballo " + (i + 1) + " ha ganado!");
+            if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 1) {
+                System.out.println(MAGENTA + "El Caballo " + (i + 1) + " ha ganado la partida."+RESET);
+                jugador.setPartidasPerdidas(+1);
+                System.out.println(MAGENTA + "EL jugador ha perdido: " + jugador.getPartidasPerdidas()+" veces."+ RESET);
+                partidaFinalizada();
                 return true;
             }
         }
         return false;
     }
+
+    /**
+     * Método encargado de dar las opciones después de finalizada la partida.
+     */
+    private void partidaFinalizada() {
+        int juegoFinalizado;
+        System.out.println("");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Juego Finalizado, ¿qué desea realizar?");
+        System.out.println("1. Volver a jugar.");
+        System.out.println("2. Ir al menú principal.");
+        System.out.println("3. Terminar el programa.");
+        juegoFinalizado = scanner.nextInt();
+        switch (juegoFinalizado) {
+            case 1:
+                holaHipodromo();
+                break;
+            case 2:
+                Forcade forcade = new Forcade();
+                forcade.menuPrincipal();
+                break;
+            case 3:
+                System.exit(0);
+                break;
+            default:
+                System.out.println("Por favor, ingresa una entrada válida.");
+                partidaFinalizada();
+                break;
+        }
+    }
+
 }
