@@ -3,7 +3,7 @@ package com.ymcris.ipc1.practica1.carrera;
 import java.util.Scanner;
 
 /**
- *
+ * Clase no utilizada :(
  * @author crist
  */
 public class Caballos {

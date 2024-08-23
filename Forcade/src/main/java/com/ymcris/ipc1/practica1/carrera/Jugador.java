@@ -10,23 +10,12 @@ import java.util.Scanner;
 public class Jugador {
 
     Scanner scanner = new Scanner(System.in);
-    Caballos caballo = new Caballos();
     Dados dado = new Dados();
     String nombre;
     int númeroDeCaballos;
     int númeroDeDados;
     int estrategia;
-    boolean avanceNormal = true;
-
-    /**
-     *
-     * @param caballo
-     * @return
-     */
-    protected Caballos seleccionarCaballo(Caballos caballo) {
-
-        return caballo;
-    }
+    boolean avanceNormal;
 
     /**
      *
@@ -50,21 +39,21 @@ public class Jugador {
                 break;
         }
     }
-    
-    protected void avanceNormal(){
+
+    protected void avanceNormal() {
         dado.lanzarDados(númeroDeDados);
         dado.verificarPrimo();
         System.out.println("\n".repeat(100));
         System.out.println("El jugador avanza normal " + dado.getResultado() + " casillas");
         avanceNormal = true;
     }
-    
-    protected void avenceConRiesgo(){
+
+    protected void avenceConRiesgo() {
         dado.lanzarDados(númeroDeDados);
         dado.verificarPrimo();
         System.out.println("\n".repeat(100));
         System.out.println("El jugador avanza con riesgo " + dado.getResultado() + " casillas");
-        avanceNormal = false;    
+        avanceNormal = false;
     }
 
     /**
@@ -94,11 +83,9 @@ public class Jugador {
         return númeroDeDados;
     }
 
-    public boolean isAvanceNormal() {
+    public boolean getAvanceNormal() {
         return avanceNormal;
     }
-    
-    
 
     //--------------------------------------------------------------------------   
     protected int filas;
@@ -107,11 +94,13 @@ public class Jugador {
     private String VERDE = "\033[0;32m";
     private String RESET = "\033[0m";
     protected int[][] pista;
+    private int [] posicionesCaballos;
 
     public Jugador(int númeroDeCaballos) {
         this.númeroDeCaballos = númeroDeCaballos;
         this.filas = númeroDeCaballos + 1;
         this.pista = new int[filas][COLUMNAS];
+        this.posicionesCaballos = new int[filas];
     }
 
     public Jugador() {
@@ -132,16 +121,11 @@ public class Jugador {
      * Muestra la pisata en consola.
      */
     protected void mostrarPista() {
-        if (pista.length == 0 || pista[0].length == 0) {
-            System.out.println("La pista no tiene dimensiones válidas.");
-            return;
-        }
         System.out.println("Pista:");
         for (int i = 0; i < pista.length; i++) {
             for (int j = 0; j < pista[i].length; j++) {
                 System.out.print(pista[i][j] + VERDE + "\t");
             }
-            System.out.println();
             System.out.println(RESET);
         }
     }
@@ -151,32 +135,45 @@ public class Jugador {
      */
     public void colocarCaballos() {
         for (int i = 0; i < númeroDeCaballos; i++) {
-            pista[0][0] = 1;
-            posicionJugador= 0;
-            pista[i + 1][0] = i + 2;
+            pista[i][0] = i + 1;  // Cada caballo tiene un número distinto
+            posicionesCaballos[i] = 0;  // Posición inicial de cada caballo
         }
+        pista[0][0] = 1;  // El caballo del jugador siempre está en la primera fila
+        posicionJugador = 0;
     }
-    
-    public void moverCaballoJugador(int resultadoDados){
-        pista[0][posicionJugador]=0;
-        posicionJugador += resultadoDados;
+
+    public void moverCaballoJugador(int resultadoDados) {
+        pista[0][posicionJugador] = 0; //limpia la posición actual del jugador
+        posicionJugador += resultadoDados; // actualiza la posición del jugador
         if (posicionJugador >= COLUMNAS) {
-            posicionJugador = COLUMNAS -1;
+            posicionJugador = COLUMNAS - 1;
         }
-        
-        pista[0][posicionJugador]=1;
+
+        pista[0][posicionJugador] = 1;//coloca el caballo del jugador en su nueva posición
         moverCaballosAleatorios();
     }
-    
-    private void moverCaballosAleatorios(){
-        for (int i = 1; i < númeroDeCaballos; i++) {
-            int movimientoAleatorio = (int) (Math.random() * 3); // Movimiento entre 0 y 2 casillas
-            int nuevaPosicion = posicionJugador + movimientoAleatorio;
 
-            if (nuevaPosicion < COLUMNAS) {
-                pista[i][posicionJugador] = 0; // Limpiar posición actual
-                pista[i][nuevaPosicion] = i + 2; // Mover a la nueva posición
+    private void moverCaballosAleatorios() {
+        for (int i = 1; i < númeroDeCaballos; i++) {  // Empieza desde 1 porque el índice 0 es del jugador
+            pista[i][posicionesCaballos[i]] = 0;  // Limpiar posición actual
+            int movimientoAleatorio = (int) (Math.random() * 3);  // Movimiento entre 0 y 2 casillas
+            posicionesCaballos[i] += movimientoAleatorio;
+
+            if (posicionesCaballos[i] >= COLUMNAS) {
+                posicionesCaballos[i] = COLUMNAS - 1;
             }
+
+            pista[i][posicionesCaballos[i]] = i + 1;  // Actualizar nueva posición
         }
+    }
+
+    /**
+     * Obtiene la posición de un caballo específico en la pista.
+     *
+     * @param index El índice del caballo.
+     * @return La posición del caballo en la pista.
+     */
+    public int getPosicionCaballo(int indiceCaballo) {
+        return posicionesCaballos[indiceCaballo];
     }
 }

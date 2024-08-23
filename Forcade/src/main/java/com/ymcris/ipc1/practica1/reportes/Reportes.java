@@ -7,4 +7,7 @@ package com.ymcris.ipc1.practica1.reportes;
  */
 public class Reportes {
 
+    public void holaReportes(){
+    
+    }
 }

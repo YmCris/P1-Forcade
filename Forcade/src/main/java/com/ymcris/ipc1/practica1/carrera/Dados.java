@@ -1,6 +1,5 @@
 package com.ymcris.ipc1.practica1.carrera;
 
-import java.util.Scanner;
 import java.util.Random;
 
 /**
@@ -28,6 +27,7 @@ public class Dados {
     }
 
      protected void verificarPrimo() {
+        Jugador jugador = new Jugador();
         if (resultado <= 1) {
             esPrimo = false;
         } else {
@@ -39,7 +39,13 @@ public class Dados {
                 }
             }
         }
-        System.out.println(esPrimo ? "El número es primo" : "El número no es primo");
+        if(jugador.getAvanceNormal()== false){
+            System.out.println("EL resultado es: "+ resultado);
+        }else if(jugador.getAvanceNormal()== true){
+            System.out.println(esPrimo ? "El número es primo" : "El número no es primo");
+            resultado = esPrimo? resultado +6: resultado+0;        
+            System.out.println("EL resultado es: "+ resultado);
+        }
         return;
     }
 
