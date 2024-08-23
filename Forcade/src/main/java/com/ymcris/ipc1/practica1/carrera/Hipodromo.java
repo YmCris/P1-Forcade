@@ -90,7 +90,7 @@ public class Hipodromo {
             partidaFinalizada();
             return true;
         }
-        for (int i = 0; i < pista.getNúmeroDeCaballos(); i++) {
+        for (int i = 0; i <= pista.getNúmeroDeCaballos(); i++) {
             if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 1) {
                 System.out.println(MAGENTA + "El Caballo " + (i + 1) + " ha ganado la partida."+RESET);
                 jugador.setPartidasPerdidas(+1);
@@ -106,6 +106,7 @@ public class Hipodromo {
      * Método encargado de dar las opciones después de finalizada la partida.
      */
     private void partidaFinalizada() {
+        Forcade forcade = new Forcade();
         int juegoFinalizado;
         System.out.println("");
         System.out.println("");
@@ -117,10 +118,10 @@ public class Hipodromo {
         juegoFinalizado = scanner.nextInt();
         switch (juegoFinalizado) {
             case 1:
+                forcade.setInicioHipodromo(+1);
                 holaHipodromo();
                 break;
             case 2:
-                Forcade forcade = new Forcade();
                 forcade.menuPrincipal();
                 break;
             case 3:

@@ -12,8 +12,8 @@ public class Jugador {
 
     Scanner scanner = new Scanner(System.in);
     Dados dado = new Dados();
-    protected static int[] vecesGanadas = new int[1];
-    protected static int[] vecesPerdidas = new int[1];
+    public static int[] vecesGanadas = new int[1];
+    public static int[] vecesPerdidas = new int[1];
     protected final int CABALLOS_POR_DEFECTO = 5;
     protected final int DADOS_POR_DEFECTO = 2;
 

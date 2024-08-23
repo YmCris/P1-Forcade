@@ -17,6 +17,9 @@ import java.util.Scanner;
 public class Forcade {
 
     Scanner scanner = new Scanner(System.in);
+    public static int[] inicioHipodromo = new int[1];
+    public static int[] inicioAnagramas = new int[1];
+
     int opciónJuego;
     boolean parametroIntroducido = false;
 
@@ -40,15 +43,18 @@ public class Forcade {
      * a ejecutar.
      */
     private void parámetroInicial(String[] args) {
+        Forcade forcade = new Forcade();
         if (args.length > 0) {
             String comando = args[0].trim().toLowerCase();
             if (comando.equals("hola")) {
                 System.out.println("HOlA MUNDO");
             } else if (comando.equals("hipodromo")) {
+                forcade.setInicioHipodromo(+1);
                 Hipodromo hipodromo = new Hipodromo();
                 hipodromo.holaHipodromo();
                 parametroIntroducido = true;
             } else if (comando.equals("anagramas")) {
+                forcade.setInicioAnagramas(+1);
                 Anagramas anagrama = new Anagramas();
                 anagrama.holaAnagramas();
                 parametroIntroducido = true;
@@ -70,6 +76,7 @@ public class Forcade {
      * Método encargado de ser el menú principal.
      */
     public void menuPrincipal() {
+        Forcade forcade = new Forcade();
         System.out.println("\n".repeat(10));
         mostrarMenuPrincipal();
         opciónJuego = scanner.nextInt();
@@ -79,10 +86,12 @@ public class Forcade {
                 jugar.ayuda();
                 break;
             case 2:
+                forcade.setInicioHipodromo(+1);
                 Hipodromo hipodromo = new Hipodromo();
                 hipodromo.holaHipodromo();
                 break;
             case 3:
+                forcade.setInicioAnagramas(+1);
                 Anagramas anagrama = new Anagramas();
                 anagrama.holaAnagramas();
                 break;
@@ -137,4 +146,20 @@ public class Forcade {
         System.out.println("                                                            └------------------------------------------------┘");
     }
 
+    //GETTERS & SETTERS 
+    public int getInicioHipodromo() {
+        return inicioHipodromo[0];
+    }
+
+    public void setInicioHipodromo(int inicioH) {
+        inicioHipodromo[0] += inicioH;
+    }
+
+    public int getInicioAnagramas() {
+        return inicioAnagramas[0];
+    }
+
+    public void setInicioAnagramas(int inicioA) {
+        inicioAnagramas[0] += inicioA;
+    }
 }
