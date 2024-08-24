@@ -2,7 +2,7 @@ package com.ymcris.ipc1.practica1.carrera;
 
 import com.ymcris.ipc1.practica1.forcade.Forcade;
 import java.util.Scanner;
-import java.util.Timer; 
+import java.util.Timer;
 
 /**
  *
@@ -12,6 +12,7 @@ public class Jugador {
 
     Scanner scanner = new Scanner(System.in);
     Dados dado = new Dados();
+
     public static int[] vecesGanadas = new int[1];
     public static int[] vecesPerdidas = new int[1];
     protected final int CABALLOS_POR_DEFECTO = 5;
@@ -29,7 +30,7 @@ public class Jugador {
      */
     protected void decidirEstrategia() {
         System.out.println("\n".repeat(100));
-        System.out.println(AZUL +"Seleccione su estrategia:"+RESET);
+        System.out.println(AZUL + "Seleccione su estrategia:" + RESET);
         System.out.println("1. Avanzar normal.");
         System.out.println("2. Avanzar con riesgo.");
         System.out.println("3. Regresar al menú.");
@@ -51,11 +52,11 @@ public class Jugador {
                 break;
         }
     }
-    
-    protected void informacionJuego(){
-        System.out.println(AZUL+"Posiciones:"+RESET);
+
+    protected void informacionJuego() {
+        System.out.println(AZUL + "Posiciones:" + RESET);
         for (int i = 0; i <= númeroDeCaballos; i++) {
-            System.out.println("La posición del caballo "+(i+1)+" es: "+getPosicionCaballo(i));
+            System.out.println("La posición del caballo " + (i + 1) + " es: " + getPosicionCaballo(i));
         }
     }
 
@@ -175,7 +176,7 @@ public class Jugador {
      */
     protected void mostrarPista() {
         informacionJuego();
-        System.out.println(AZUL+"Pista:"+RESET);
+        System.out.println(AZUL + "Pista:" + RESET);
         for (int i = 0; i < pista.length; i++) {
             for (int j = 0; j < pista[i].length; j++) {
                 System.out.print(pista[i][j] + VERDE);
