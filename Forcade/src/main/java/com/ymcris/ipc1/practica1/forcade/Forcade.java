@@ -12,7 +12,7 @@ import java.util.Scanner;
  * @version 21.0.2
  * @see Anagramas
  * @see Battleship
- * @see CarreraDeCaballos
+ * @see Hipodromo
  */
 public class Forcade {
 
@@ -20,8 +20,10 @@ public class Forcade {
     public static int[] inicioHipodromo = new int[1];
     public static int[] inicioAnagramas = new int[1];
 
-    int opciónJuego;
-    boolean parametroIntroducido = false;
+    private int opciónJuego;
+    private final String RESET = "\033[0m";
+    private final String AZUL = "\033[34m";
+    private boolean parametroIntroducido = false;
 
     /**
      * Método principal encargado de iniciar el programa.
@@ -117,12 +119,12 @@ public class Forcade {
      */
     private void inicio() {
         System.out.println("\n".repeat(100));
-        System.out.println(""
-                + "            _____    ___    ____     ____      _      ____    _____ \n"
-                + "           |  ___|  / _ \\  |  _ \\   / ___|    / \\    |  _ \\  | ____|\n"
-                + "           | |_    | | | | | |_) | | |       / _ \\   | | | | |  _|  \n"
-                + "           |  _|   | |_| | |  _ <  | |___   / ___ \\  | |_| | | |___ \n"
-                + "           |_|      \\___/  |_| \\_\\  \\____| /_/   \\_\\ |____/  |_____|");
+        System.out.println(AZUL
+                + "                              _____    ___    ____     ____      _      ____    _____ \n"
+                + "                             |  ___|  / _ \\  |  _ \\   / ___|    / \\    |  _ \\  | ____|\n"
+                + "                             | |_    | | | | | |_) | | |       / _ \\   | | | | |  _|  \n"
+                + "                             |  _|   | |_| | |  _ <  | |___   / ___ \\  | |_| | | |___ \n"
+                + "                             |_|      \\___/  |_| \\_\\  \\____| /_/   \\_\\ |____/  |_____|" + RESET);
         System.out.println("\n".repeat(5));
         System.out.println("Presione enter para continuar");
         String hola = scanner.nextLine();

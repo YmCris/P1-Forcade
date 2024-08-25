@@ -9,7 +9,7 @@ import java.util.Random;
 public class Dados {
 
     Random random = new Random();
-    
+
     private String RESET = "\033[0m";
     private String AZUL = "\033[34m";
 
@@ -22,7 +22,7 @@ public class Dados {
     protected void lanzarDados(int numeroDeDados) {
         resultado = 0;
         System.out.println("\n".repeat(100));
-        System.out.println(AZUL+"Resultado De los dados:"+RESET);
+        System.out.println(AZUL + "Resultado De los dados:" + RESET);
         for (int i = 0; i < numeroDeDados; i++) {
             int dado = random.nextInt(6) + 1;
             resultado += dado;
@@ -65,5 +65,4 @@ public class Dados {
     public boolean isEsPrimo() {
         return esPrimo;
     }
-
 }

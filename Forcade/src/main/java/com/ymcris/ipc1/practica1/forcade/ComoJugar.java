@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author crist
+ * @author YmCris
  */
 public class ComoJugar {
 
@@ -12,6 +12,9 @@ public class ComoJugar {
     Forcade forcade = new Forcade();
     int regresar;
 
+    /**
+     * Método usado para mostrar las diferentes opciones de ayuda al usuario.
+     */
     public void ayuda() {
         System.out.println("Bienvenido a la ayuda de forcade, aquí podrás obtener información de como se juegan los videojuegos.");
         System.out.println("Recomendamos ampliamente leer el manual de usuario donde se detallan a profundidad cada juego.");
@@ -41,6 +44,10 @@ public class ComoJugar {
         }
     }
 
+    /**
+     * Método usado para mostrar como jugar el juego de carrera de caballos en
+     * el hipodromo.
+     */
     public void comoJugarCaballos() {
         System.out.println("\n".repeat(60));
         System.out.println("Carrera de Caballos en el Hipódromo es un juego de estrategia y de ¿suerte?" + "\n" + "Un excelente juego donde el azar y la estrategia se juntan para dar una emocionante carrera de caballos. ");
@@ -54,15 +61,23 @@ public class ComoJugar {
         System.out.println("Juego:");
         System.out.println("en cada bloque de ceros, muestra la pista de un caballo, el caballo “1” es al cual controla, los demás caballos se mueven aleatoriamente en su pista.\n"
                 + "El juego continúa en base a las estrategias, el primer caballo en llegar a los 200 ganará la carrera.");
-      
+
         forcade.menuPrincipal();
     }
 
+    /**
+     * Método usado para mostrar como jugar el juego de anagramas.
+     */
     public void comoJugarAnagramas() {
 
+        forcade.menuPrincipal();
     }
 
+    /**
+     * Método usado para mostrar como se jugaría el juego de battleship.
+     */
     public void comoJugarBattleship() {
-
+        System.out.println(":c");
+        forcade.menuPrincipal();
     }
 }

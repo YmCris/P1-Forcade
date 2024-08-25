@@ -53,6 +53,9 @@ public class Jugador {
         }
     }
 
+    /**
+     * Método usado para mostrar información al jugador durante toda la partida.
+     */
     protected void informacionJuego() {
         System.out.println(AZUL + "Posiciones:" + RESET);
         for (int i = 0; i <= númeroDeCaballos; i++) {
@@ -61,7 +64,7 @@ public class Jugador {
     }
 
     /**
-     * Método encargado de pedir el nombre del jugador.
+     * Método encargado de pedir y guardar el nombre del jugador.
      */
     protected void definirNombre() {
         System.out.println("Ingrese el nombre del jugador:");
@@ -158,6 +161,7 @@ public class Jugador {
      * Constructor vacio porque ciertos métodos lo requieren.
      */
     public Jugador() {
+
     }
 
     /**
@@ -224,9 +228,9 @@ public class Jugador {
         for (int i = 1; i <= númeroDeCaballos; i++) {
             pista[i][posicionesCaballos[i]] = 0;
 
-            int movimientoAleatorio = (int) (Math.random() * 8);
+            int movimientoAleatorio = (int) (Math.random() * 10);
             posicionesCaballos[i] += movimientoAleatorio;
-            int movimientoAleatorio1 = (int) (Math.random() * 9);
+            int movimientoAleatorio1 = (int) (Math.random() * 11);
             posicionesCaballos[i] += movimientoAleatorio1;
 
             if (posicionesCaballos[i] >= COLUMNAS) {
