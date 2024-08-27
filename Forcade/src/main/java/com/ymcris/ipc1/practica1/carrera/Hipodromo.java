@@ -1,6 +1,7 @@
 package com.ymcris.ipc1.practica1.carrera;
 
 import com.ymcris.ipc1.practica1.forcade.Forcade;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -11,7 +12,8 @@ import java.util.Scanner;
  */
 public class Hipodromo {
 
-    private final Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+    Random random = new Random();
 
     private final String MAGENTA = "\033[35m";
     private final String RESET = "\033[0m";
@@ -36,27 +38,39 @@ public class Hipodromo {
         boolean juegoEnCurso = true;
 
         while (juegoEnCurso) {
-            dado.lanzarDados(jugador.getNúmeroDeDados());
-            pista.moverCaballoJugador(dado.getResultado());
-            pista.moverCaballosAleatorios(dado.getResultado());
             pista.mostrarPista();
             if (verificarGanador(pista)) {
-                System.out.println("La carrera ha acabado.");
+                System.out.println("Carrera terminada.");
                 juegoEnCurso = false;
             } else {
                 System.out.println("");
                 System.out.println(AZUL + "Seleccione su estrategia:" + RESET);
-                System.out.println("1. Avanzar normal.");
-                System.out.println("2. Avanzar con riesgo.");
+                System.out.println("1. Avanzar normal: El caballo avanza lo que salga en los dados.");
+                System.out.println("2. Avanzar con riesgo: El caballo puede avanzar el doble o no avanzar nada.");
                 System.out.println("3. Regresar al menú principal.");
                 int respuesta = scanner.nextInt();
+                dado.lanzarDados(jugador.getNúmeroDeDados());
+                int resultado = dado.getResultado();
+                boolean esPrimo = esPrimo(resultado);
                 switch (respuesta) {
                     case 1:
                         juegoEnCurso = true;
                         System.out.println("Caballo avanza normal.");
+                        pista.moverCaballoJugador(resultado);
+                        pista.moverCaballosAleatorios(resultado);
                         break;
                     case 2:
                         System.out.println("Caballo avanza con riesgo.");
+                        if (esPrimo) {
+                            System.out.println("El número " + resultado + " es primo.");
+                            System.out.println("El caballo avanza el doble.");
+                            pista.moverCaballoJugador(resultado * 2);
+                            pista.moverCaballosAleatorios(resultado);
+                        } else {
+                            System.out.println("El número " + resultado + " no es primo.");
+                            System.out.println("El caballo no avanza nada.");
+                            pista.moverCaballosAleatorios(resultado);
+                        }
                         juegoEnCurso = true;
                         break;
                     case 3:
@@ -70,6 +84,30 @@ public class Hipodromo {
                 }
             }
         }
+    }
+
+    /**
+     * Método encargado si un número es primo
+     *
+     * @param numero número a evaluar
+     * @return true si es primo
+     */
+    private boolean esPrimo(int numero) {
+        if (numero <= 1) {
+            return false;
+        }
+        if (numero <= 3) {
+            return true;
+        }
+        if (numero % 2 == 0 || numero % 3 == 0) {
+            return false;
+        }
+        for (int i = 5; i * i <= numero; i += 6) {
+            if (numero % i == 0 || numero % (i + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

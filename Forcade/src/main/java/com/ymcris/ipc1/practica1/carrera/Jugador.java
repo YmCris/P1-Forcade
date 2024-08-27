@@ -292,4 +292,21 @@ public class Jugador {
             return posicionesCaballos[indiceCaballo];
         }
     }
+
+    public int getPosicionJugador() {
+        return posicionJugador;
+    }
+
+    public void setPosicionJugador(int posicionJugador) {
+        this.posicionJugador = posicionJugador;
+    }
+
+    public int[] getPosicionesCaballos() {
+        return posicionesCaballos;
+    }
+
+    public void setPosicionesCaballos(int[] posicionesCaballos) {
+        this.posicionesCaballos = posicionesCaballos;
+    }
+
 }
