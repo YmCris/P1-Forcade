@@ -95,11 +95,11 @@ public class Jugador {
      * (5).
      */
     protected void definirCaballos() {
-        System.out.println("\n".repeat(3));
         System.out.println("Ingrese el número de caballos con los que desea competir: ");
         númeroDeCaballos = scanner.nextInt();
         scanner.nextLine();
         if (númeroDeCaballos < 3 || númeroDeCaballos > 7) {
+            System.out.println("\n".repeat(3));
             System.out.println("El número de caballos debe ser entre 3 y 7");
             definirCaballos();
         } else {
@@ -128,11 +128,11 @@ public class Jugador {
      * también límita los dados en un rango de [1,4].
      */
     protected void definirDados() {
-        System.out.println("\n".repeat(3));
         System.out.println("Ingrese el número de dados con los que desea jugar:");
         númeroDeDados = scanner.nextInt();
         scanner.nextLine();
         if (númeroDeDados < 1 || númeroDeDados > 4) {
+            System.out.println("\n".repeat(3));
             System.out.println("El número de dados debe ser entre 1 y 4");
             definirDados();
         }

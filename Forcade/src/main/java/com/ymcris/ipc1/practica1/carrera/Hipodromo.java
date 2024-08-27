@@ -121,7 +121,7 @@ public class Hipodromo {
         int posicionJugador = pista.getPosicionCaballo(0);
         for (int i = 0; i <= pista.getNúmeroDeCaballos(); i++) {
             if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 1 && posicionJugador >= pista.COLUMNAS - 1) {
-                System.out.println("Hubo un empate entre el jugador " + jugador.getNombre() + " y el caballo " + (i + 1));
+                System.out.println("Hubo un empate entre el jugador " + jugador.getNombre() + " y el caballo " + (i + 1)+" Ambos son ganadores!");
             }
         }
         if (posicionJugador >= pista.COLUMNAS - 1) {

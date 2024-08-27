@@ -14,7 +14,7 @@ public class Palabras {
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
-    private String[] palabrasOcultas = {"amor", "resigo", "caro", "cielo", "resta", "tenol"};
+    private final String[] palabrasOcultas = {"amor", "resigo", "caro", "cielo", "resta", "tenol"};
     private final String[][] palabrasValidas = {
         {"amor", "roma", "ramo", "mora"},
         {"resigo", "riesgo", "sergio"},
@@ -26,7 +26,7 @@ public class Palabras {
     private final String RESET = "\033[0m";
     private final String AZUL = "\033[34m";
 
-    private String[] palabrasIngresadas;
+    private final String[] palabrasIngresadas;
     private String[] palabrasEncontradas;
     private String palabraDesordenada;
     private String palabraOculta;
@@ -53,7 +53,8 @@ public class Palabras {
     }
 
     /**
-     * Método encargado de desordenar la palabra oculta y mostrarla.
+     * Método encargado de desordenar la palabra oculta con el algoritmo de y
+     * mostrarla.
      */
     private void desordenarPalabraOculta() {
         palabraAOcultar = random.nextInt(palabrasOcultas.length);
@@ -78,21 +79,30 @@ public class Palabras {
         desordenarPalabraOculta();
         while (intentosRestantes > 0) {
             mostrarEstadoActual();
-            System.out.print("- Las palabras erroneas que se han introducido son:                  ");
+            System.out.print("- Las palabras que se han introducido son:                  ");
             for (String palabrasIngresadasUsuario : palabrasIngresadas) {
                 System.out.print(MAGENTA + palabrasIngresadasUsuario + "        " + RESET);
             }
             System.out.println("");
-            System.out.println(AZUL + "Ingrese la palabra: " + RESET);
+            System.out.println(AZUL + "No puedes usar 2 veces una letra. Ingrese la palabra: " + "              (Presione enter para volver al menú principal) " + RESET);
             String palabraIntento = scanner.nextLine().toLowerCase();
-
-            if (verificarPalabra(palabraIntento)) {
+            if (palabraIntento.isEmpty()) {
+                Forcade forcade = new Forcade();
+                forcade.menuPrincipal();
+            }
+            if (verificarLetrasRepetidas(palabraIntento)) {
                 System.out.println("\n".repeat(100));
+                System.out.println("La palabra contiene letras repetidas, pierdes dos turns.");
+                intentosRestantes--;
+            } else {
+                System.out.println("\n".repeat(100));
+                System.out.println("La palabra no contiene letras repetidas.");
+            }
+            if (verificarPalabra(palabraIntento)) {
                 System.out.println("La palabra es válida.");
                 palabrasEncontradas[cantidadEncontrada++] = palabraIntento;
                 intentosRestantes++;
             } else {
-                System.out.println("\n".repeat(100));
                 System.out.println("La palabra no es válida.");
             }
             int indiceError = palabrasIngresadas.length - intentosRestantes;
@@ -115,9 +125,33 @@ public class Palabras {
     }
 
     /**
+     * Método encargado de verificar si la palabra del usuario contiene letras
+     * repetidas.
+     *
+     * @param palabra - Palabra utilizada para verificar si se repiten
+     * carácteres (Palabra intento)
+     * @return true - si se repiten
+     */
+    private boolean verificarLetrasRepetidas(String palabra) {
+        boolean[] letrasUsadas = new boolean[27];
+        for (char letra : palabra.toCharArray()) {
+            if (letra >= 'a' && letra <= 'z') {
+                int indice = letra - 'a';
+                if (letrasUsadas[indice]) {
+                    return true;
+                }
+                letrasUsadas[indice] = true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Método encargado de verificar si la palabra introducida por el usuario
      * corresponde una palabra que este en el arreglo correspondiente.
      *
+     * @param palabraUsuario Es la palabra que se va a verificar si cumple con
+     * estar en tre las palabras válidas.
      * @return juegoTerminado - Determina si el jugador acerto la palabra y así
      * termina el juego.
      */
