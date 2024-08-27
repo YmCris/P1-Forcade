@@ -11,11 +11,11 @@ import java.util.Scanner;
  */
 public class Hipodromo {
 
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
-    private String MAGENTA = "\033[35m";
-    private String RESET = "\033[0m";
-    private String AZUL = "\033[34m";
+    private final String MAGENTA = "\033[35m";
+    private final String RESET = "\033[0m";
+    private final String AZUL = "\033[34m";
 
     /**
      * Método encargado de juntar todo las instancias y métodos requeridos para

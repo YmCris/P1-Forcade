@@ -18,6 +18,8 @@ public class Dados {
 
     /**
      * Método encargado de lanzar los dados y calcula el resultado.
+     *
+     * @param numeroDeDados - Número que el usuario introduce.
      */
     protected void lanzarDados(int numeroDeDados) {
         resultado = 0;

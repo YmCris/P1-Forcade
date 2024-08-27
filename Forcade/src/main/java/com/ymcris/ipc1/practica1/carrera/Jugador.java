@@ -77,7 +77,7 @@ public class Jugador {
      * (5).
      */
     protected void definirCaballos() {
-        System.out.println("Ingrese el número de caballos con los que desea competir:");
+        System.out.println("Ingrese el número de caballos con los que desea competir: ");
         númeroDeCaballos = scanner.nextInt();
         if (númeroDeCaballos < 3 || númeroDeCaballos > 7) {
             System.out.println("El número de caballos debe ser entre 3 y 7");
