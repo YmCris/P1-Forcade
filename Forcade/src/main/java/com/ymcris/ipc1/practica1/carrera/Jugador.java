@@ -1,8 +1,8 @@
 package com.ymcris.ipc1.practica1.carrera;
 
 import com.ymcris.ipc1.practica1.forcade.Forcade;
+import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
 
 /**
  *
@@ -11,12 +11,12 @@ import java.util.Timer;
 public class Jugador {
 
     Scanner scanner = new Scanner(System.in);
-    Dados dado = new Dados();
+    Random random = new Random();
 
     public static int[] vecesGanadas = new int[1];
     public static int[] vecesPerdidas = new int[1];
-    protected final int CABALLOS_POR_DEFECTO = 5;
-    protected final int DADOS_POR_DEFECTO = 2;
+    private final int CABALLOS_POR_DEFECTO = 5;
+    private final int DADOS_POR_DEFECTO = 2;
 
     protected String nombre;
     protected int númeroDeCaballos;
@@ -57,7 +57,8 @@ public class Jugador {
      * Método usado para mostrar información al jugador durante toda la partida.
      */
     protected void informacionJuego() {
-        System.out.println(AZUL + "Posiciones:" + RESET);
+        System.out.println(AZUL + "Turnos / Posiciones:" + RESET);
+        System.out.println("Caballo 1 es el caballo de: " + nombre);
         for (int i = 0; i <= númeroDeCaballos; i++) {
             System.out.println("La posición del caballo " + (i + 1) + " es: " + getPosicionCaballo(i));
         }
@@ -67,8 +68,25 @@ public class Jugador {
      * Método encargado de pedir y guardar el nombre del jugador.
      */
     protected void definirNombre() {
+        System.out.println("\n".repeat(100));
         System.out.println("Ingrese el nombre del jugador:");
         nombre = scanner.nextLine();
+    }
+
+    /**
+     * Método encargado de definir los caballos contrincantes predeterminados.
+     */
+    protected void definirCaballosPredeterminados() {
+        System.out.println("\n".repeat(100));
+        System.out.println("· Presione una tecla para definir los caballos con los que desea competir.");
+        System.out.println("· Presione enter para la opción predeterminada.");
+        String caballosPredeterminados = scanner.nextLine();
+        if (caballosPredeterminados.isEmpty()) {
+            númeroDeCaballos = CABALLOS_POR_DEFECTO;
+            definirDadosPredeterminados();
+        } else {
+            definirCaballos();
+        }
     }
 
     /**
@@ -77,11 +95,31 @@ public class Jugador {
      * (5).
      */
     protected void definirCaballos() {
+        System.out.println("\n".repeat(3));
         System.out.println("Ingrese el número de caballos con los que desea competir: ");
         númeroDeCaballos = scanner.nextInt();
+        scanner.nextLine();
         if (númeroDeCaballos < 3 || númeroDeCaballos > 7) {
             System.out.println("El número de caballos debe ser entre 3 y 7");
             definirCaballos();
+        } else {
+            definirDadosPredeterminados();
+        }
+    }
+
+    /**
+     * Método encargado de asignar los dados predeterminados en dado caso el
+     * usuario no los introduzca.
+     */
+    protected void definirDadosPredeterminados() {
+        System.out.println("\n".repeat(100));
+        System.out.println("· Presione una tecla para definir los dados con los que desea competir.");
+        System.out.println("· Presione enter para la opción predeterminada.");
+        String dadosPredeterminados = scanner.nextLine();
+        if (dadosPredeterminados.isEmpty()) {
+            númeroDeDados = DADOS_POR_DEFECTO;
+        } else {
+            definirDados();
         }
     }
 
@@ -90,8 +128,10 @@ public class Jugador {
      * también límita los dados en un rango de [1,4].
      */
     protected void definirDados() {
+        System.out.println("\n".repeat(3));
         System.out.println("Ingrese el número de dados con los que desea jugar:");
         númeroDeDados = scanner.nextInt();
+        scanner.nextLine();
         if (númeroDeDados < 1 || númeroDeDados > 4) {
             System.out.println("El número de dados debe ser entre 1 y 4");
             definirDados();
@@ -133,11 +173,10 @@ public class Jugador {
 
     // "CLASE PISTA" Se mezcla porque al momento de querer usar el número de caballos nomas daba 0
     //--------------------------------------------------------------------------   
-    private String VERDE = "\033[0;32m";
-    private String MAGENTA = "\033[35m";
-    private String RESET = "\033[0m";
-    private String AZUL = "\033[34m";
-    protected int COLUMNAS = 200;
+    private final String VERDE = "\033[0;32m";
+    private final String RESET = "\033[0m";
+    private final String AZUL = "\033[34m";
+    protected final int COLUMNAS = 200;
 
     protected int filas;
     protected int posicionJugador;
@@ -216,26 +255,24 @@ public class Jugador {
             System.out.println("EL jugador " + nombre + " es el ganador.");
         }
         pista[0][posicionJugador] = 1;
-        moverCaballosAleatorios();
     }
 
     /**
      * Método encargado de mover los caballos contrincantes de forma aleatoria
      * siempre en su misma fila, así como definir que pasa cuando llegan al
      * final.
+     *
+     * @param resultadoDados - Es el resultado que se obtiene de los dados que
+     * haya seleccionado el usuario.
      */
-    private void moverCaballosAleatorios() {
+    protected void moverCaballosAleatorios(int resultadoDados) {
         for (int i = 1; i <= númeroDeCaballos; i++) {
             pista[i][posicionesCaballos[i]] = 0;
-
-            int movimientoAleatorio = (int) (Math.random() * 10);
+            int movimientoAleatorio = random.nextInt(resultadoDados) * 2;
             posicionesCaballos[i] += movimientoAleatorio;
-            int movimientoAleatorio1 = (int) (Math.random() * 11);
-            posicionesCaballos[i] += movimientoAleatorio1;
-
             if (posicionesCaballos[i] >= COLUMNAS) {
                 posicionesCaballos[i] = COLUMNAS - 1;
-                System.out.println("El caballo " + (i + 1) + " llegó a la meta " + nombre + " perdió");
+                System.out.println("El caballo " + (i + 1) + " llegó a la meta " + getNombre() + " perdió");
             }
             pista[i][posicionesCaballos[i]] = i + 1;
         }

@@ -24,10 +24,8 @@ public class Hipodromo {
      */
     public void holaHipodromo() {
         Jugador jugador = new Jugador();
-
         jugador.definirNombre();
-        jugador.definirCaballos();
-        jugador.definirDados();
+        jugador.definirCaballosPredeterminados();
         jugador.decidirEstrategia();
 
         Dados dado = new Dados();
@@ -40,6 +38,7 @@ public class Hipodromo {
         while (juegoEnCurso) {
             dado.lanzarDados(jugador.getNúmeroDeDados());
             pista.moverCaballoJugador(dado.getResultado());
+            pista.moverCaballosAleatorios(dado.getResultado());
             pista.mostrarPista();
             if (verificarGanador(pista)) {
                 System.out.println("La carrera ha acabado.");
@@ -82,7 +81,12 @@ public class Hipodromo {
     private boolean verificarGanador(Jugador pista) {
         Jugador jugador = new Jugador();
         int posicionJugador = pista.getPosicionCaballo(0);
-        if (pista.getPosicionCaballo(0) >= pista.COLUMNAS - 1) {
+        for (int i = 0; i <= pista.getNúmeroDeCaballos(); i++) {
+            if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 1 && posicionJugador >= pista.COLUMNAS - 1) {
+                System.out.println("Hubo un empate entre el jugador " + jugador.getNombre() + " y el caballo " + (i + 1));
+            }
+        }
+        if (posicionJugador >= pista.COLUMNAS - 1) {
             System.out.println(MAGENTA + "El caballo de " + jugador.getNombre() + jugador.nombre + " es el ganador." + RESET);
             jugador.setPartidasGanadas(+1);
             System.out.println(MAGENTA + "EL jugador ha ganado: " + jugador.getPartidasGanadas() + " veces." + RESET);
@@ -96,6 +100,8 @@ public class Hipodromo {
                 System.out.println(MAGENTA + "EL jugador ha perdido: " + jugador.getPartidasPerdidas() + " veces." + RESET);
                 partidaFinalizada();
                 return true;
+            } else if (pista.getPosicionCaballo(i) >= pista.COLUMNAS - 1 && pista.getPosicionCaballo(0) >= pista.COLUMNAS - 1) {
+                System.out.println("El caballo " + (i + 1) + " y el jugador " + jugador.getNombre() + " empataron la partida");
             }
         }
         return false;
