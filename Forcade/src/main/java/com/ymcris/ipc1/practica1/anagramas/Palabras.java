@@ -53,8 +53,8 @@ public class Palabras {
     }
 
     /**
-     * Método encargado de desordenar la palabra oculta con el algoritmo de y
-     * mostrarla.
+     * Método encargado de desordenar la palabra oculta con el algoritmo de
+     * Fisher-Yate y mostrarla.
      */
     private void desordenarPalabraOculta() {
         palabraAOcultar = random.nextInt(palabrasOcultas.length);
